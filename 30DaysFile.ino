@@ -38,8 +38,6 @@ bool CABIN_LIGHT_STATE = 0;
 bool STORAGE_LIGHT_STATE = 0;
 bool COCKPIT_LIGHT_STATE = 0;
 
-bool binaryLightSwitch[] = {0,0,0};
-
 // the setup function runs once when you press reset or power the board
 void setup() 
 {
@@ -52,56 +50,6 @@ void setup()
   pinMode(CABIN_LIGHTS_SWITCH_PIN, INPUT);
   pinMode(STORAGE_LIGHTS_SWITCH_PIN, INPUT);
   pinMode(COCKPIT_LIGHTS_SWITCH_PIN, INPUT);
-}
-
-
-//This is the day 5 challenge 2.  I make the 3 switches correlate to 3 binary 
-// digits to potentially control 7 lights with 000 turning off all lights 
-void loopChallenge2()
-//void loop()
-{
-  for(int i = 0; i<3; i++)
-  {
-    if(digitalRead(i+2) == HIGH)
-    {
-      binaryLightSwitch[i] = 1;
-    }
-    else
-    {
-      binaryLightSwitch[i] = 0;
-    }
-  }
-
-  if( binaryLightSwitch[0] == 0 && binaryLightSwitch[1] == 0 && binaryLightSwitch[2] == 0 )
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);
-    digitalWrite(STORAGE_LIGHTS_PIN, LOW);
-    digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
-  }
-  else if (binaryLightSwitch[0] == 0 && binaryLightSwitch[1] == 0 && binaryLightSwitch[2] == 1)
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);
-    digitalWrite(STORAGE_LIGHTS_PIN, LOW);
-    digitalWrite(COCKPIT_LIGHTS_PIN, HIGH);
-  }
-  else if (binaryLightSwitch[0] == 0 && binaryLightSwitch[1] == 1 && binaryLightSwitch[2] == 0)
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);
-    digitalWrite(STORAGE_LIGHTS_PIN, HIGH);
-    digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
-  }
-  else if (binaryLightSwitch[0] == 0 && binaryLightSwitch[1] == 1 && binaryLightSwitch[2] == 1)
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, HIGH);
-    digitalWrite(STORAGE_LIGHTS_PIN, LOW);
-    digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
-  }
-  else
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);
-    digitalWrite(STORAGE_LIGHTS_PIN, LOW);
-    digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
-  }
 }
 
 // the loop function runs over and over again forever
