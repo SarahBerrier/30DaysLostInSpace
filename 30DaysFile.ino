@@ -59,13 +59,6 @@ void setup()
 void loopChallenge1NonPractical() 
 //void loop()
 {
-/*
-  digitalWrite(CABIN_LIGHTS_PIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(100);                            // wait for a second
-  digitalWrite(CABIN_LIGHTS_PIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                           // wait for a second
-*/
-
   if(digitalRead(CABIN_LIGHTS_SWITCH_PIN) == HIGH)      //if the switch is on (HIGH voltage)
   {
     if (STORAGE_LIGHT_STATE || COCKPIT_LIGHT_STATE)
