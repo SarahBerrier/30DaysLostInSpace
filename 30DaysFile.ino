@@ -54,6 +54,9 @@ void setup()
   pinMode(COCKPIT_LIGHTS_SWITCH_PIN, INPUT);
 }
 
+
+//This is the day 5 challenge 2.  I make the 3 switches correlate to 3 binary 
+// digits to potentially control 7 lights with 000 turning off all lights 
 void loopChallenge2()
 //void loop()
 {
@@ -99,29 +102,7 @@ void loopChallenge2()
     digitalWrite(STORAGE_LIGHTS_PIN, LOW);
     digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
   }
-
-
-  /*
-    if(digitalRead(3) == HIGH)
-    {
-      binaryLightSwitch[1] = 1;
-    }
-    else
-    {
-      binaryLightSwitch[1] = 0;
-    }
-
-    if(digitalRead(4) == HIGH)
-    {
-      binaryLightSwitch[2] = 1;
-    }
-    else
-    {
-      binaryLightSwitch[2] = 0;
-    }
-*/
 }
-
 
 // the loop function runs over and over again forever
 // saber comment.  I like my solution for challenge 1 from day 5 the best but it feels clunky and like too much code.  
@@ -194,7 +175,7 @@ void loopChallenge1NonPractical()
 
 // saber, this is a more practical solution because you can leave one room with 
 // the light on and when you get to the next, turn that light on and it will take priority.
-voidloop1challenge1Practical()
+void loop1challenge1Practical()
 {
   if(digitalRead(CABIN_LIGHTS_SWITCH_PIN) == HIGH)      //if the switch is on (HIGH voltage)
   {
