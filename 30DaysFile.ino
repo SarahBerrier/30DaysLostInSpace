@@ -38,6 +38,14 @@ bool CABIN_LIGHT_STATE = 0;
 bool STORAGE_LIGHT_STATE = 0;
 bool COCKPIT_LIGHT_STATE = 0;
 
+bool CABIN_LIGHTS_SWITCH_CURRENT = 0;
+bool STORAGE_LIGHTS_SWITCH_CURRENT = 0;
+bool COCKPIT_LIGHTS_SWITCH_CURRENT = 0;
+
+bool CABIN_LIGHTS_SWITCH_MEMORY = 0;
+bool STORAGE_LIGHTS_SWITCH_MEMORY = 0;
+bool COCKPIT_LIGHTS_SWITCH_MEMORY = 0;
+
 // the setup function runs once when you press reset or power the board
 void setup() 
 {
@@ -50,6 +58,10 @@ void setup()
   pinMode(CABIN_LIGHTS_SWITCH_PIN, INPUT);
   pinMode(STORAGE_LIGHTS_SWITCH_PIN, INPUT);
   pinMode(COCKPIT_LIGHTS_SWITCH_PIN, INPUT);
+
+  CABIN_LIGHTS_SWITCH_MEMORY = digitalRead(CABIN_LIGHTS_SWITCH_PIN);
+  STORAGE_LIGHTS_SWITCH_MEMORY = digitalRead(STORAGE_LIGHTS_SWITCH_PIN);
+  COCKPIT_LIGHTS_SWITCH_MEMORY = digitalRead(COCKPIT_LIGHTS_SWITCH_PIN);
 }
 
 // the loop function runs over and over again forever
@@ -116,26 +128,57 @@ void loopChallenge1NonPractical()
 
 // saber, this is a more practical solution because you can leave one room with 
 // the light on and when you get to the next, turn that light on and it will take priority.
-void loop1challenge1Practical()
+// If you are back in a room that lost priority, just turn off and back on to regain priority.
+void loop()
 {
-  if(digitalRead(CABIN_LIGHTS_SWITCH_PIN) == HIGH)      //if the switch is on (HIGH voltage)
+  CABIN_LIGHTS_SWITCH_CURRENT = digitalRead(CABIN_LIGHTS_SWITCH_PIN);
+  STORAGE_LIGHTS_SWITCH_CURRENT = digitalRead(STORAGE_LIGHTS_SWITCH_PIN);
+  COCKPIT_LIGHTS_SWITCH_CURRENT = digitalRead(COCKPIT_LIGHTS_SWITCH_PIN);
+  
+  if(CABIN_LIGHTS_SWITCH_CURRENT != CABIN_LIGHTS_SWITCH_MEMORY)
   {
-    if (CABIN_LIGHT_STATE == 0) 
-    {    
-      CABIN_LIGHT_STATE = 1;      
-      digitalWrite(CABIN_LIGHTS_PIN, HIGH);               //turn on LED by providing HIGH voltage (5V)
+    if(CABIN_LIGHTS_SWITCH_CURRENT == HIGH)
+    {
+      digitalWrite(CABIN_LIGHTS_PIN, HIGH);
+      digitalWrite(STORAGE_LIGHTS_PIN, LOW);
+      digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
     }
     else
     {
-      CABIN_LIGHT_STATE = 1;
+      digitalWrite(CABIN_LIGHTS_PIN, LOW);
     }
+    CABIN_LIGHTS_SWITCH_MEMORY = CABIN_LIGHTS_SWITCH_CURRENT;
   }
-  else
+    
+  if(STORAGE_LIGHTS_SWITCH_CURRENT != STORAGE_LIGHTS_SWITCH_MEMORY)
   {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);                //else turn off LED by setting output to LOW (zero volts)
-    CABIN_LIGHT_STATE = 0;      
+    if(STORAGE_LIGHTS_SWITCH_CURRENT == HIGH)
+    {
+      digitalWrite(STORAGE_LIGHTS_PIN, HIGH);
+      digitalWrite(CABIN_LIGHTS_PIN, LOW);
+      digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
+    }
+    else
+    {
+      digitalWrite(STORAGE_LIGHTS_PIN, LOW);
+    }
+    STORAGE_LIGHTS_SWITCH_MEMORY = STORAGE_LIGHTS_SWITCH_CURRENT;
   }
 
+  if(COCKPIT_LIGHTS_SWITCH_CURRENT != COCKPIT_LIGHTS_SWITCH_MEMORY)
+  {
+    if(COCKPIT_LIGHTS_SWITCH_CURRENT == HIGH)
+    {
+      digitalWrite(COCKPIT_LIGHTS_PIN, HIGH);
+      digitalWrite(CABIN_LIGHTS_PIN, LOW);
+      digitalWrite(STORAGE_LIGHTS_PIN, LOW);
+    }
+    else
+    {
+      digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
+    }
+    COCKPIT_LIGHTS_SWITCH_MEMORY = COCKPIT_LIGHTS_SWITCH_CURRENT;
+  }
 }
 
 // saber notes 
