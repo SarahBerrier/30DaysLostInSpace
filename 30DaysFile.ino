@@ -34,10 +34,6 @@ const byte CABIN_LIGHTS_SWITCH_PIN = 2;  //cabin lights controlled by switch 1
 const byte STORAGE_LIGHTS_SWITCH_PIN = 3;  //cabin lights controlled by switch 2
 const byte COCKPIT_LIGHTS_SWITCH_PIN = 4;  //exterior lights controlled by switch 3
 
-bool CABIN_LIGHT_STATE = 0;
-bool STORAGE_LIGHT_STATE = 0;
-bool COCKPIT_LIGHT_STATE = 0;
-
 bool CABIN_LIGHTS_SWITCH_CURRENT = 0;
 bool STORAGE_LIGHTS_SWITCH_CURRENT = 0;
 bool COCKPIT_LIGHTS_SWITCH_CURRENT = 0;
@@ -65,67 +61,6 @@ void setup()
 }
 
 // the loop function runs over and over again forever
-// saber comment.  I like my solution for challenge 1 from day 5 the best but it feels clunky and like too much code.  
-// also, it isn't practical for a real world environment.  On the ship you don't want to have to turn off one light
-// to travel in the dark to turn on a second light.
-void loopChallenge1NonPractical() 
-//void loop()
-{
-  if(digitalRead(CABIN_LIGHTS_SWITCH_PIN) == HIGH)      //if the switch is on (HIGH voltage)
-  {
-    if (STORAGE_LIGHT_STATE || COCKPIT_LIGHT_STATE)
-    {
-      CABIN_LIGHT_STATE = 0;      
-    }
-    else
-    {
-      digitalWrite(CABIN_LIGHTS_PIN, HIGH);               //turn on LED by providing HIGH voltage (5V)
-      CABIN_LIGHT_STATE = 1;
-    }
-  }
-  else
-  {
-    digitalWrite(CABIN_LIGHTS_PIN, LOW);                //else turn off LED by setting output to LOW (zero volts)
-    CABIN_LIGHT_STATE = 0;      
-  }
-
-  if(digitalRead(STORAGE_LIGHTS_SWITCH_PIN) == HIGH)
-  {
-    if (CABIN_LIGHT_STATE || COCKPIT_LIGHT_STATE)
-    {
-      STORAGE_LIGHT_STATE = 0;      
-    }
-    else
-    {
-      digitalWrite(STORAGE_LIGHTS_PIN, HIGH);
-      STORAGE_LIGHT_STATE = 1;
-    }
-  }
-  else
-  {
-    digitalWrite(STORAGE_LIGHTS_PIN, LOW);
-    STORAGE_LIGHT_STATE = 0;      
-  }
-
-  if(digitalRead(COCKPIT_LIGHTS_SWITCH_PIN) == HIGH)
-  {
-    if (CABIN_LIGHT_STATE || STORAGE_LIGHT_STATE)
-    {
-      COCKPIT_LIGHT_STATE = 0;
-    }
-    else
-    {
-      digitalWrite(COCKPIT_LIGHTS_PIN, HIGH);
-      COCKPIT_LIGHT_STATE = 1;
-    }
-  }
-  else
-  {
-    digitalWrite(COCKPIT_LIGHTS_PIN, LOW);
-    COCKPIT_LIGHT_STATE = 0;
-  }
-}
-
 // saber, this is a more practical solution because you can leave one room with 
 // the light on and when you get to the next, turn that light on and it will take priority.
 // If you are back in a room that lost priority, just turn off and back on to regain priority.
